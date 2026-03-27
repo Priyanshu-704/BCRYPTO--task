@@ -5,7 +5,7 @@
     "types:generate": "ts-node scripts/generate-model-types.ts",
     "types:generate:force": "ts-node scripts/generate-model-types.ts --force",
     "predev": "npm run types:generate",
-    "dev": "nodemon --config nodemon.json",
+    "dev": "tsx watch index.ts",
     "clean": "node -e \"const fs=require('fs');const p=require('path');const d=p.join(__dirname,'dist');if(fs.existsSync(d)){fs.rmSync(d,{recursive:true,force:true});console.log('Cleaned dist folder')}\"",
     "prebuild": "npm run types:generate",
     "build": "tsc -p tsconfig.json --noEmit false",
