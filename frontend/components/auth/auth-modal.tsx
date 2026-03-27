@@ -229,9 +229,8 @@ export function AuthModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      {/* Custom backdrop overlay with blue tint */}
-      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 bg-gradient-to-br from-blue-900/20 via-slate-900/40 to-blue-800/20" />
-      <DialogContent className="sm:max-w-xl p-0 border-none shadow-2xl rounded-xl w-[95vw] sm:w-full max-h-[90vh] overflow-hidden bg-gradient-to-b from-background to-background/95 backdrop-blur-sm">
+      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+      <DialogContent className="w-[95vw] max-h-[90vh] overflow-hidden rounded-[1.75rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(247,244,236,0.96)_100%)] p-0 shadow-[0_45px_120px_-50px_rgba(15,23,42,0.7)] backdrop-blur-xl sm:max-w-xl dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(15,23,42,0.96)_0%,rgba(10,16,28,0.96)_100%)]">
         {/* ---- Accessibility: DialogTitle and DialogDescription ---- */}
         <DialogTitle>
           <span className="sr-only">Authentication</span>
@@ -245,8 +244,9 @@ export function AuthModal({
 
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+          <div className="absolute -left-24 -top-24 h-64 w-64 rounded-full bg-sky-400/15 blur-3xl"></div>
+          <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-amber-300/20 blur-3xl"></div>
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/70 to-transparent dark:from-white/5"></div>
         </div>
         <DialogPrimitive.Close className="hidden absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
           <X className="h-4 w-4" />
@@ -278,7 +278,7 @@ export function AuthModal({
           className={`max-h-[90vh] pb-8 overflow-y-auto scrollbar-hide auth-modal-content ${animateContent ? "opacity-100" : "opacity-0"}`}
         >
           {view === "forgot-password" ? (
-            <div className="p-8">
+            <div className="p-8 md:p-9">
               <ForgotPasswordForm
                 onSuccess={handleSuccess}
                 onLoginClick={handleLoginClick}
@@ -286,7 +286,7 @@ export function AuthModal({
               />
             </div>
           ) : view === "reset-password" ? (
-            <div className="p-8">
+            <div className="p-8 md:p-9">
               <ResetPasswordForm
                 token={resetToken || ""}
                 onSuccess={handleSuccess}
@@ -295,7 +295,7 @@ export function AuthModal({
               />
             </div>
           ) : view === "wallet-login" ? (
-            <div className="p-8">
+            <div className="p-8 md:p-9">
               <LazyWalletProvider cookies="">
                 <WalletLoginForm
                   onSuccess={handleSuccess}
@@ -304,7 +304,7 @@ export function AuthModal({
               </LazyWalletProvider>
             </div>
           ) : (
-            <div className="p-8">
+            <div className="p-8 md:p-9">
               {view === "login" ? (
                 <LoginForm
                   onSuccess={handleSuccess}
@@ -332,19 +332,19 @@ export function AuthModal({
           )}
 
           {(view === "login" || view === "register") && (
-            <div className="px-8 pb-8 pt-2">
-              <div className="flex flex-col items-center justify-center space-y-3 text-center">
-                <div className="flex items-center justify-center space-x-2 text-xs text-muted-foreground">
+            <div className="px-8 pb-8 pt-1 md:px-9 md:pb-9">
+              <div className="rounded-[1.25rem] border border-black/5 bg-black/[0.025] p-4 text-center dark:border-white/10 dark:bg-white/[0.03]">
+                <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-muted-foreground">
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
                     <Lock className="h-4 w-4 text-primary" />
                   </div>
                   <span>{t("secure_authentication")}</span>
-                  <div className="w-px h-4 bg-border"></div>
+                  <div className="h-4 w-px bg-border"></div>
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
                     <Shield className="h-4 w-4 text-primary" />
                   </div>
                   <span>{t("data_protection")}</span>
-                  <div className="w-px h-4 bg-border"></div>
+                  <div className="h-4 w-px bg-border"></div>
                   <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
                     <CheckCircle2 className="h-4 w-4 text-primary" />
                   </div>

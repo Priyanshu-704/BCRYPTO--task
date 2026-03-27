@@ -191,112 +191,104 @@ export function SiteFooter() {
   }
 
   return (
-    <footer className="relative bg-muted/30 border-t">
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-linear-to-t from-background/50 to-transparent pointer-events-none" />
+    <footer className="relative border-t border-black/5 bg-transparent dark:border-white/10">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/40 to-transparent dark:from-white/[0.02]" />
 
       <div className="relative">
-        {/* Main Content */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          {/* Top Section - Logo and Social */}
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 lg:gap-12 pb-10 lg:pb-12 border-b border-border/50">
-            {/* Brand */}
-            <div className="max-w-sm">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-linear-to-br from-primary to-primary/60 rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                  <TrendingUp className="w-5 h-5 text-primary-foreground" />
+          <div className="public-card overflow-hidden px-6 py-8 md:px-8 md:py-10">
+            <div className="mb-10 flex flex-col gap-8 border-b border-black/5 pb-10 dark:border-white/10 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-sm">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-cyan-400 text-primary-foreground shadow-lg shadow-sky-500/20">
+                    <TrendingUp className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                  <span className="text-xl font-bold text-foreground">{siteName}</span>
                 </div>
-                <span className="text-xl font-bold text-foreground">{siteName}</span>
+                <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
+                  {siteDescription}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/register"
+                    className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
+                  >
+                    Get Started
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                {siteDescription}
-              </p>
-              {/* CTA Button */}
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/register"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium rounded-lg transition-colors"
-                >
-                  Get Started
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+
+              {socialLinks.length > 0 && (
+                <div className="flex flex-col items-start gap-4 lg:items-end">
+                  <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Follow Us</span>
+                  <div className="flex flex-wrap items-center gap-3">
+                    {socialLinks.map((social) => (
+                      <a
+                        key={social.id}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={social.label}
+                        title={social.label}
+                        className="flex h-11 w-11 items-center justify-center rounded-2xl border border-black/5 bg-white/70 text-muted-foreground transition-all hover:-translate-y-0.5 hover:text-foreground dark:border-white/10 dark:bg-white/5"
+                      >
+                        <Image
+                          src={social.icon}
+                          alt={social.label}
+                          width={20}
+                          height={20}
+                          className="opacity-70 transition-opacity hover:opacity-100 dark:invert"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Social Links from Settings */}
-            {socialLinks.length > 0 && (
-              <div className="flex flex-col items-start lg:items-end gap-4">
-                <span className="text-sm text-muted-foreground">Follow Us</span>
-                <div className="flex items-center gap-3 flex-wrap">
-                  {socialLinks.map((social) => (
-                    <a
-                      key={social.id}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                      title={social.label}
-                      className="w-10 h-10 flex items-center justify-center rounded-lg bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+            <div className="grid grid-cols-2 gap-8 py-10 sm:grid-cols-3 lg:grid-cols-4 lg:gap-12 lg:py-12">
+              {footerSections.map((section) => (
+                <div key={section.title}>
+                  <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-foreground">
+                    <section.icon className={cn("w-4 h-4", section.iconColor)} />
+                    {section.title}
+                  </h3>
+                  <ul className="space-y-3">
+                    {section.links.map((link) => (
+                      <li key={link.name}>
+                        <Link
+                          href={link.href}
+                          className="inline-block text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div className="border-t border-black/5 pt-5 dark:border-white/10">
+              <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+                <p className="text-center text-sm text-muted-foreground sm:text-left">
+                  © {new Date().getFullYear()} {siteName}. {tComponents("all_rights_reserved")}.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+                  {[
+                    { name: "Privacy", href: "/privacy" },
+                    { name: "Terms", href: "/terms" },
+                  ].map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      <Image
-                        src={social.icon}
-                        alt={social.label}
-                        width={20}
-                        height={20}
-                        className="dark:invert opacity-70 hover:opacity-100 transition-opacity"
-                      />
-                    </a>
+                      {link.name}
+                    </Link>
                   ))}
                 </div>
-              </div>
-            )}
-          </div>
-
-          {/* Links Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12 py-10 lg:py-12">
-            {footerSections.map((section) => (
-              <div key={section.title}>
-                <h3 className="text-foreground font-semibold text-sm mb-4 flex items-center gap-2">
-                  <section.icon className={cn("w-4 h-4", section.iconColor)} />
-                  {section.title}
-                </h3>
-                <ul className="space-y-3">
-                  {section.links.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className="text-muted-foreground hover:text-foreground text-sm transition-colors inline-block"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-border/50 bg-muted/20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-muted-foreground text-sm text-center sm:text-left">
-                © {new Date().getFullYear()} {siteName}. {tComponents("all_rights_reserved")}.
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-                {[
-                  { name: "Privacy", href: "/privacy" },
-                  { name: "Terms", href: "/terms" },
-                ].map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
               </div>
             </div>
           </div>

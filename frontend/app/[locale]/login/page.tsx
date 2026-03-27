@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter, Link } from "@/i18n/routing";
 import { useUserStore } from "@/store/user";
+import { PublicHero, PublicShell } from "@/components/layout/public-shell";
 
 export default function LoginPage() {
   const t = useTranslations("common");
@@ -152,8 +153,25 @@ export default function LoginPage() {
   // Email verification result page
   if (verificationStatus !== 'none') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/50 to-muted/30 p-4">
-        <div className="max-w-md w-full space-y-6 text-center">
+      <PublicShell contentClassName="min-h-screen px-4 py-10 md:px-6">
+        <div className="mx-auto flex min-h-screen max-w-5xl items-center justify-center">
+          <div className="w-full max-w-xl space-y-6 text-center">
+            <PublicHero
+              eyebrow="Account status"
+              title={
+                isVerifying
+                  ? t("verifying_email")
+                  : verificationStatus === "success"
+                    ? t("email_verified")
+                    : t("verification_failed")
+              }
+              description={
+                isVerifying
+                  ? t("please_wait_while_we_verify_your")
+                  : verificationMessage
+              }
+              className="mb-6 text-left"
+            />
           <div className="space-y-2">
             {isVerifying ? (
               <>
@@ -244,13 +262,13 @@ export default function LoginPage() {
             </div>
           )}
         </div>
-      </div>
+        </div>
+      </PublicShell>
     );
   }
 
-  // Regular login modal
   return (
-    <>
+    <PublicShell contentClassName="min-h-screen px-4 py-10 md:px-6">
       <AuthModal
         isOpen={isModalOpen}
         onClose={handleModalClose}
@@ -258,33 +276,58 @@ export default function LoginPage() {
         onViewChange={() => {}}
         returnTo={returnTo}
       />
-      
-      {/* Background for modal */}
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/50 to-muted/30">
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl font-bold text-muted-foreground">
-            {isModalOpen ? 'Please log in to continue' : 'Login'}
-          </h1>
-          <p className="text-muted-foreground">
-            {isModalOpen ? 'Fill in your credentials to access your account' : 'Click below to open the login form'}
+
+      <div className="mx-auto grid min-h-screen max-w-6xl items-center gap-8 lg:grid-cols-[minmax(0,1fr)_26rem]">
+        <PublicHero
+          eyebrow="Secure access"
+          title="A cleaner, calmer entry point into the trading platform."
+          description="The login route now uses the same premium shell as the public site, with stronger hierarchy, better spacing, and a more intentional first impression across mobile and desktop."
+          aside={
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-black/5 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Access stack</p>
+                <ul className="mt-3 space-y-2 text-sm leading-6">
+                  <li>Live trading and wallet controls.</li>
+                  <li>Email verification and recovery support.</li>
+                  <li>Responsive auth flow for every screen size.</li>
+                </ul>
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+                <span className="rounded-full border border-black/10 px-3 py-1 dark:border-white/10">Secure auth</span>
+                <span className="rounded-full border border-black/10 px-3 py-1 dark:border-white/10">Fast recovery</span>
+                <span className="rounded-full border border-black/10 px-3 py-1 dark:border-white/10">Mobile ready</span>
+              </div>
+            </div>
+          }
+        />
+
+        <div className="public-card p-6 text-left md:p-8">
+          <span className="public-kicker">Welcome back</span>
+          <h2 className="mt-5 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">
+            {isModalOpen ? "Your login form is open and ready." : "Access your account in one step."}
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            {isModalOpen
+              ? "Use the secure dialog to continue into your portfolio, trading tools, and account settings."
+              : "Open the authentication flow to continue into the platform."}
           </p>
-          <div className="space-y-3">
+          <div className="mt-6 space-y-3">
             {!isModalOpen && (
-              <Button 
+              <Button
                 onClick={() => setIsModalOpen(true)}
-                className="px-8 py-3 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary"
+                className="w-full rounded-full px-8 py-6"
               >
                 {t("open_login_form")}
               </Button>
             )}
-            <Link href="/">
-              <Button variant="outline">
+            <Link href="/" className="block">
+              <Button variant="outline" className="w-full rounded-full py-6">
                 {t("return_to_home")}
               </Button>
             </Link>
           </div>
         </div>
       </div>
-    </>
+    </PublicShell>
   );
-} 
+}

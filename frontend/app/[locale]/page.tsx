@@ -10,6 +10,7 @@ import { Section } from "@/types/builder";
 import { pageAttributes } from "@/types/builder";
 import SectionRenderer from "./(dashboard)/admin/builder/components/renderers/section-renderer";
 import { useTranslations } from "next-intl";
+import { PublicShell } from "@/components/layout/public-shell";
 
 export default function Home(): React.JSX.Element {
   const t = useTranslations("common");
@@ -218,10 +219,10 @@ export default function Home(): React.JSX.Element {
   };
 
   return (
-    <main>
+    <PublicShell contentClassName="min-h-screen">
       <SiteHeader />
       {isFrontendBuilder ? renderBuilderPage() : <DefaultHomePage />}
       <SiteFooter />
-    </main>
+    </PublicShell>
   );
 }

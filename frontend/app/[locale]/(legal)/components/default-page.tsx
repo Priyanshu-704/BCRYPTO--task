@@ -245,11 +245,14 @@ export function DefaultPage({
     : "";
 
   return (
-    <div className="w-full bg-background">
-      <div className="container mx-auto max-w-4xl py-24">
+    <div className="w-full">
+      <div className="container mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-14">
+        <div className="mb-8 md:mb-10">
+          <span className="public-kicker">Legal and company information</span>
+        </div>
         {/* Page Title - only show if content doesn't have its own H1 */}
         {pageTitle && (
-          <h1 className="text-4xl md:text-5xl font-bold mb-12 md:mb-16 text-center text-foreground">
+          <h1 className="mb-8 max-w-3xl text-4xl font-semibold tracking-tight text-slate-950 md:mb-12 md:text-6xl dark:text-white">
             {pageTitle}
           </h1>
         )}
